@@ -17,10 +17,16 @@ public class BodyManager : MonoBehaviour {
 	public Transform directionalLight;
 	public Transform earthCam;
 
+	public GameObject PlayerPos;
+	public GameObject OVR_Camera;
+	public GameObject modelPos;
 
 	// Use this for initialization
 	void Start () {
-	
+		OVR_Camera.transform.SetParent (PlayerPos.transform, true);
+		model_sun.transform.SetParent (modelPos.transform, true);
+		OVR_Camera.transform.localPosition = Vector3.zero;
+		model_sun.transform.localPosition = Vector3.zero;
 	}
 	
 	// Update is called once per frame
