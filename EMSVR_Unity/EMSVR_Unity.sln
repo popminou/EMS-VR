@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{B32C5E0D-08B3-85F6-7C79-2EE72B5091AE}") = "EMSVR_Unity", "Assembly-CSharp.csproj", "{67D65CFA-C09C-B699-2329-6E991F2423FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67D65CFA-C09C-B699-2329-6E991F2423FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67D65CFA-C09C-B699-2329-6E991F2423FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67D65CFA-C09C-B699-2329-6E991F2423FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67D65CFA-C09C-B699-2329-6E991F2423FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
