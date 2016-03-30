@@ -113,7 +113,6 @@ public class ModelManager : MonoBehaviour {
 		float angle = mod(-(EARTH_STARTING_ANGLE + (360 * ((EARTH_ORBIT_RATE * time) % 1))), 360f);
 		Vector2 pos = getOffestFromAngleAndDistance(angle, EARTH_SUN_DISTANCE);
 
-
 		earthPos.x = pos.x;
 		earthPos.y = pos.y;
 		earthPos.z = 0f;
@@ -149,9 +148,9 @@ public class ModelManager : MonoBehaviour {
 
 			//Utils.log("At time " + time + ", z offset is " + zOffset);
 		
-		moonPos.x = earthPos.x + xOffset;
-		moonPos.y = earthPos.y + yOffset;
-		moonPos.z = earthPos.z + zOffset;
+		moonPos.x = /*earthPos.x +*/ xOffset;
+		moonPos.y = /*earthPos.y +*/ yOffset;
+		moonPos.z = /*earthPos.z +*/ zOffset;
 		moonPos.z_angle = zAngle;
 		moonPos.rot = calculateRotation(time, MOON_ROTATION_RATE);
 
