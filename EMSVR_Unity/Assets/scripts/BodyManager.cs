@@ -14,6 +14,7 @@ public class BodyManager : MonoBehaviour {
 
 	public ModelManager myModelManager;
 	public Transform directionalLight;
+	public Transform directionalLight_model;
 	public Transform earthCam;
 
 	public GameObject camera;
@@ -56,10 +57,12 @@ public class BodyManager : MonoBehaviour {
 		// Model
 		//ModelManager.pos earthPos = myModelManager.GetEarthPos ();
 		//ModelManager.pos moonPos = myModelManager.GetMoonPos ();
+
 		model_earth.transform.position = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.MODEL_EARTH_SUN_DISTANCE + model_sun.transform.position;
 		model_moon.transform.position = new Vector3 (moonPos.x, moonPos.z, moonPos.y) * myModelManager.MODEL_MOON_EARTH_DISTANCE + model_earth.transform.position;
-		directionalLight.LookAt (model_earth.transform.position);
-		earthCam.LookAt (model_moon.transform.position);
+		directionalLight.LookAt (body_earth.transform.position);
+		directionalLight_model.LookAt (model_earth.transform.position);
+		earthCam.LookAt (body_moon.transform.position);
 	
 	}
 
@@ -72,8 +75,7 @@ public class BodyManager : MonoBehaviour {
 		List<Vector3> orbitLinePts = new List<Vector3>();
 		for(int i = 0; i < _segmentCount + 1; i++)
 		{
-			//if(positions[i] != null)
-			Debug.Log("" + i + " : " + positions[i]);
+			//Debug.Log("" + i + " : " + positions[i]);
 
 			orbitLinePts.Add(positions[i] * _sizeFactor);
 		}
