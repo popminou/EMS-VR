@@ -4,9 +4,11 @@ using System.Collections;
 public class InputManager : MonoBehaviour {
 
 	TimeManager timeManager;
+	BodyManager bodyManager;
 	// Use this for initialization
 	void Start () {
 		timeManager = GameObject.FindObjectOfType<TimeManager> ();
+		bodyManager = GameObject.FindObjectOfType<BodyManager> ();
 	}
 	
 	// Update is called once per frame
@@ -26,8 +28,10 @@ public class InputManager : MonoBehaviour {
 			timeManager.TogglePauseTime ();
 			Debug.Log ("Fire1"); 
 		}
-		if (Input.GetButtonDown ("Fire2"))
+		if (Input.GetButtonDown ("Fire2")) {
 			Debug.Log ("Fire2"); 
+			bodyManager.ToggleView ();
+		}
 	
 	}
 }

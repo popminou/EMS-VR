@@ -23,6 +23,8 @@ public class BodyManager : MonoBehaviour {
 	public GameObject camera;
 	public GameObject playerPosition;
 	public GameObject groundObservatory;
+	public GameObject skyObservatory;
+	private bool viewingFromGround = true; 
 
 	//	public GameObject PlayerPos;
 //	public GameObject OVR_Camera;
@@ -59,7 +61,26 @@ public class BodyManager : MonoBehaviour {
 	void SetPlayerPosition(GameObject targetPos)
 	{
 		playerPosition.transform.SetParent (targetPos.transform, false);
+		if (viewingFromGround) {
+			//Debug.Log ("OFF");
+			body_earth_mesh.GetComponent<Renderer> ().enabled = false;
+		} else {
+			//Debug.Log("ON");
+			body_earth_mesh.GetComponent<Renderer> ().enabled = true;
+		}
 
+	}
+
+	public void ToggleView()
+	{
+		viewingFromGround = !viewingFromGround;
+		if (viewingFromGround) {
+			SetPlayerPosition (groundObservatory);
+		} else {
+			SetPlayerPosition (skyObservatory);
+		}
+
+			
 	}
 	// Update is called once per frame
 	void Update ()
