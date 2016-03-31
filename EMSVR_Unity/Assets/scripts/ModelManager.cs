@@ -10,16 +10,16 @@ public class ModelManager : MonoBehaviour {
 	
 	}
 
-	pos moonPos;
-	pos earthPos;
-	pos sunPos;
+	BodyPos moonPos;
+	BodyPos earthPos;
+	BodyPos sunPos;
 
 
-	public pos GetEarthPos(){ return earthPos;}
-	public pos GetMoonPos(){ return moonPos;}
-	public pos GetSunPos(){ return sunPos;}
+	public BodyPos GetEarthPos(){ return earthPos;}
+	public BodyPos GetMoonPos(){ return moonPos;}
+	public BodyPos GetSunPos(){ return sunPos;}
 
-	public struct pos
+	public struct BodyPos
 	{
 		public float x;
 		public float y;
@@ -62,11 +62,11 @@ public class ModelManager : MonoBehaviour {
 		
 	public void init()
 	{
-		sunPos = new pos ();
+		sunPos = new BodyPos ();
 		sunPos.set (0f, 0f, 0f, 0f, 0f, 0f, 0f);
-		earthPos = new pos ();
+		earthPos = new BodyPos ();
 		earthPos.set (0f, 0f, 0f, 0f, 0f, 0f, 0f);
-		moonPos = new pos ();
+		moonPos = new BodyPos ();
 		moonPos.set (0f, 0f, 0f, 0f, 0f, 0f, 0f);
 
 		reset();
@@ -111,15 +111,56 @@ public class ModelManager : MonoBehaviour {
 	void calculateEarthPos(float time)
 	{
 		float angle = mod(-(EARTH_STARTING_ANGLE + (360 * ((EARTH_ORBIT_RATE * time) % 1))), 360f);
-		Vector2 pos = getOffestFromAngleAndDistance(angle, EARTH_SUN_DISTANCE);
+		Vector2 BodyPos = getOffestFromAngleAndDistance(angle, 1/*EARTH_SUN_DISTANCE*/);
 
-
-		earthPos.x = pos.x;
-		earthPos.y = pos.y;
+		earthPos.x = BodyPos.x;
+		earthPos.y = BodyPos.y;
 		earthPos.z = 0f;
 		earthPos.rot = calculateRotation(time, EARTH_ROTATION_RATE);
 		earthPos.angle = angle;
 
+	}
+
+	int MAX_MULTIPLE_POSITIONS = 10000;
+
+	public Vector3[] calculateMultipleEarthPos (float startTime, float endTime, int numPoints)
+	{
+		float deltaTime = endTime - startTime;
+		float timeInc = deltaTime / numPoints;
+		Vector3[] positions = new Vector3[MAX_MULTIPLE_POSITIONS];
+		Vector3 newPosition = new Vector3();
+
+		for(var i = 0; i < numPoints; i++)
+		{
+			calculateEarthPos(startTime + timeInc*i);
+			//BodyPos = { x: computedEarthPosition.x, y: computedEarthPosition.y, z: computedEarthPosition.z, rot: computedEarthPosition.rot, angle: computedEarthPosition.angle };
+			newPosition.x = earthPos.x;
+			newPosition.y = earthPos.y;
+			newPosition.z = earthPos.z;
+
+			positions[i] = newPosition;
+		}
+
+		return positions;
+
+
+
+//		 var calculateMultipleEarthPos = function (startTime, endTime, numPoints, useKeplerEquation)
+//		{
+//			var deltaTime = endTime - startTime;
+//			var timeInc = deltaTime / numPoints;
+//			var positions = [];
+//
+//			for(var i = 0; i < numPoints; i++)
+//			{
+//				calculateEarthPos(startTime + timeInc*i, useKeplerEquation);
+//				var BodyPos = { x: computedEarthPosition.x, y: computedEarthPosition.y, z: computedEarthPosition.z, rot: computedEarthPosition.rot, angle: computedEarthPosition.angle };
+//				positions.push(BodyPos);
+//			}
+//
+//			return positions;
+//		}
+	
 	}
 
 
@@ -139,19 +180,19 @@ public class ModelManager : MonoBehaviour {
 
 
 		//Height of moon is sin of degree 		
-		float flatOrbitWidth =  EARTH_MOON_DISTANCE * Mathf.Cos(MOON_ORBITAL_TILT  * Mathf.PI / 180);
+		float flatOrbitWidth =  /*EARTH_MOON_DISTANCE*/1 * Mathf.Cos(MOON_ORBITAL_TILT  * Mathf.PI / 180);
 		float xOffset = flatOrbitWidth * Mathf.Cos(radAngle);
-		float yOffset = (EARTH_MOON_DISTANCE) * Mathf.Sin(radAngle);
+		float yOffset = (/*EARTH_MOON_DISTANCE*/1) * Mathf.Sin(radAngle);
 		float zAngle = MOON_ORBITAL_TILT * Mathf.Cos(radOrbitalTiltAngle);
 		float radZAngle = zAngle * Mathf.PI / 180; 
-		float zOffset = -(EARTH_MOON_DISTANCE * Mathf.Sin(radZAngle));	
+		float zOffset = -(/*EARTH_MOON_DISTANCE*/1 * Mathf.Sin(radZAngle));	
 
 
 			//Utils.log("At time " + time + ", z offset is " + zOffset);
 		
-		moonPos.x = earthPos.x + xOffset;
-		moonPos.y = earthPos.y + yOffset;
-		moonPos.z = earthPos.z + zOffset;
+		moonPos.x = /*earthPos.x +*/ xOffset;
+		moonPos.y = /*earthPos.y +*/ yOffset;
+		moonPos.z = /*earthPos.z +*/ zOffset;
 		moonPos.z_angle = zAngle;
 		moonPos.rot = calculateRotation(time, MOON_ROTATION_RATE);
 
@@ -169,7 +210,7 @@ public class ModelManager : MonoBehaviour {
 	//ACCURATE MEASUREMENTS
 	static float SYNODIC_MONTH = 29f * DAY + 12f * HOUR + 44f * MINUTE + 2.8016f * SECOND;
 	static float LUNAR_MONTH = SYNODIC_MONTH; //In case its easier to remember :P
-	static float SYNODIC_YEAR = 365f * DAY + 5f * HOUR + 48f * MINUTE + 46f * SECOND;
+	public static float SYNODIC_YEAR = 365f * DAY + 5f * HOUR + 48f * MINUTE + 46f * SECOND;
 	static float SOLAR_DAY = 24.47f * DAY;
 
 	static float SIDEREAL_MONTH = 2347126f + 9845f; 
@@ -203,5 +244,13 @@ public class ModelManager : MonoBehaviour {
 
 	static float STARTING_ORBITAL_ROTATION_OFFSET = 16.5f;
 	static float ORBITAL_ROTATION_OFFSET =0f;// 1/timeConfig.SYNODIC_YEARf; //1/timeConfig.SYNODIC_YEAR + 1/(timeConfig.SYNODIC_YEAR * 30)f; //amount that the orbital plane rotates
+
+
+	public float BODY_EARTH_SUN_DISTANCE = 400f;
+	public float BODY_MOON_EARTH_DISTANCE = 80f;
+
+	public float MODEL_EARTH_SUN_DISTANCE = 10f;
+	public float MODEL_MOON_EARTH_DISTANCE = 1f;
+
 
 }
