@@ -19,6 +19,7 @@ public class ModelManager : MonoBehaviour {
 	public BodyPos GetMoonPos(){ return moonPos;}
 	public BodyPos GetSunPos(){ return sunPos;}
 
+
 	public struct BodyPos
 	{
 		public float x;
