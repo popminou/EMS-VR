@@ -45,6 +45,14 @@ public partial class VectorLine {
 	
 	[SerializeField]
 	GameObject m_go;
+	public GameObject gameObject {
+		get {
+			if (m_go != null) {
+				return m_go;
+			}
+			return null;
+		}
+	}
 	[SerializeField]
 	RectTransform m_rectTransform;
 	public RectTransform rectTransform {

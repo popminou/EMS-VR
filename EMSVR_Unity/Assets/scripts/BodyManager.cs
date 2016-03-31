@@ -30,7 +30,7 @@ public class BodyManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		OVR_Camera.transform.SetParent (PlayerPos.transform, true);
-		model_sun.transform.SetParent (modelPos.transform, true);
+		//model_sun.transform.SetParent (modelPos.transform, true);
 		OVR_Camera.transform.localPosition = Vector3.zero;
 		model_sun.transform.localPosition = Vector3.zero;
 
@@ -69,23 +69,31 @@ public class BodyManager : MonoBehaviour {
 
 	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
 	{
-		float timeInc = ModelManager.SYNODIC_YEAR / _segmentCount;
+		//float timeInc = ModelManager.SYNODIC_YEAR / _segmentCount;
 		Vector3[] positions = myModelManager.calculateMultipleEarthPos(0, ModelManager.SYNODIC_YEAR, _segmentCount + 1);
 
 		List<Vector3> orbitLinePts = new List<Vector3>();
 		for(int i = 0; i < _segmentCount + 1; i++)
 		{
 			//Debug.Log("" + i + " : " + positions[i]);
+			
+			orbitLinePts.Add(new Vector3(positions[i].x * _sizeFactor, 0, positions[i].y * _sizeFactor));
+			//orbitLinePts.Add(positions[i] * _sizeFactor);
 
-			orbitLinePts.Add(positions[i] * _sizeFactor);
+			Debug.Log("" + i + " : " + orbitLinePts[i]);
 		}
-		orbitLinePts.Add(positions[0] * _sizeFactor);
+		orbitLinePts.Add(new Vector3(positions[0].x * _sizeFactor, 0, positions[0].y * _sizeFactor));
+		//orbitLinePts.Add(positions[0] * _sizeFactor);
 			
 		model_earthOrbitLine = new VectorLine("model_earthOrbitLine", orbitLinePts, 10, LineType.Continuous);
 		model_earthOrbitLine.color = Color.red;
 
+		//model_earthOrbitLine.gameObject.transform.SetParent(model_sun.transform, false);
+		model_earthOrbitLine.drawTransform = model_sun.transform;
 
 
+
+		//model_earthOrbitLine.
 		//model_earthOrbitLine = new VectorLine(
 		/*	
 		var segmentCount = numSegments;
