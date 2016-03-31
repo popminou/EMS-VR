@@ -24,6 +24,8 @@ public class BodyManager : MonoBehaviour {
 	public GameObject modelStationaryPos;
 
 	public VectorLine model_earthOrbitLine;
+	//public Texture orbitTexture;
+	public Material orbitMaterial;
 
 	public bool DEBUG_STATIONARY_MODEL = true;
 
@@ -41,7 +43,7 @@ public class BodyManager : MonoBehaviour {
 		model_sun.transform.localPosition = Vector3.zero;
 
 		VectorLine.SetCamera3D(camera);
-		CreateEarthOrbitLine(10, myModelManager.MODEL_EARTH_SUN_DISTANCE);
+		//CreateEarthOrbitLine(10, myModelManager.MODEL_EARTH_SUN_DISTANCE);
 	}
 
 	// Update is called once per frame
@@ -84,7 +86,7 @@ public class BodyManager : MonoBehaviour {
 		for(int i = 0; i < _segmentCount + 1; i++)
 		{
 			//Debug.Log("" + i + " : " + positions[i]);
-			
+
 			orbitLinePts.Add(new Vector3(positions[i].x * _sizeFactor, 0, positions[i].y * _sizeFactor));
 			//orbitLinePts.Add(positions[i] * _sizeFactor);
 
@@ -93,23 +95,17 @@ public class BodyManager : MonoBehaviour {
 		orbitLinePts.Add(new Vector3(positions[0].x * _sizeFactor, 0, positions[0].y * _sizeFactor));
 		//orbitLinePts.Add(positions[0] * _sizeFactor);
 			
-		model_earthOrbitLine = new VectorLine("model_earthOrbitLine", orbitLinePts, 0.005f, LineType.Continuous);
-		model_earthOrbitLine.color = Color.red;
+		model_earthOrbitLine = new VectorLine("model_earthOrbitLine", orbitLinePts, 1f, LineType.Continuous);
+		if(orbitMaterial != null)
+			model_earthOrbitLine.material = orbitMaterial;
 
-		//model_earthOrbitLine.gameObject.transform.SetParent(model_sun.transform, false);
-		//model_earthOrbitLine.drawTransform = model_sun.transform;
-		//model_earthOrbitLine.gameObject.transform.localScale = new Vector3(model_sun.transform.localScale.x, model_sun.transform.localScale.y, model_sun.transform.localScale.z);
+		model_earthOrbitLine.drawTransform = model_sun.transform;
 
 
 	}
 
 	void UpdateOrbitLines ()
 	{
-		//List<Vector3> modelEarthOrbitPoints = model_earthOrbitLine.points3;
-		Matrix4x4 earthOrbitMatrix = new Matrix4x4();
-		earthOrbitMatrix.SetTRS(model_sun.transform.position, Quaternion.identity, new Vector3(1f, 1f, 1f));
-		model_earthOrbitLine.matrix = earthOrbitMatrix;
-			
 		if(model_earthOrbitLine != null)
 			model_earthOrbitLine.Draw3D();
 
