@@ -12,6 +12,7 @@ public class BodyManager : MonoBehaviour {
 
 	public ModelManager myModelManager;
 	public Transform directionalLight;
+	public Transform directionalLight_model;
 	public Transform earthCam;
 
 	public GameObject PlayerPos;
@@ -50,8 +51,9 @@ public class BodyManager : MonoBehaviour {
 		//ModelManager.pos moonPos = myModelManager.GetMoonPos ();
 		model_earth.transform.position = new Vector3 (earthPos.x, earthPos.z, earthPos.y) + model_sun.transform.position;
 		model_moon.transform.position = new Vector3 (moonPos.x, moonPos.z, moonPos.y) + model_earth.transform.position;
-		directionalLight.LookAt (model_earth.transform.position);
-		earthCam.LookAt (model_moon.transform.position);
+		directionalLight.LookAt (body_earth.transform.position);
+		directionalLight_model.LookAt (model_earth.transform.position);
+		earthCam.LookAt (body_moon.transform.position);
 	
 	}
 }
