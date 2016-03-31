@@ -8,7 +8,7 @@ public class TimeManager : MonoBehaviour {
 
 	public float MAX_TIME = 500;
 
-	public float SPEED_FACTOR = 1;
+	public float INPUT_SPEED_FACTOR = 3;
 
 	float defaultTimeMult;
 
@@ -39,7 +39,7 @@ public class TimeManager : MonoBehaviour {
 			timeMultiplier = defaultTimeMult;
 			timePaused = false; 
 		} else {
-			timeMultiplier += SPEED_FACTOR * factor;
+			timeMultiplier += INPUT_SPEED_FACTOR * factor;
 		}
 	}
 
@@ -49,7 +49,7 @@ public class TimeManager : MonoBehaviour {
 			timeMultiplier = -defaultTimeMult;
 			timePaused = false; 
 		} else {
-			timeMultiplier -= SPEED_FACTOR * factor;
+			timeMultiplier -= INPUT_SPEED_FACTOR * factor;
 		}
 	}
 

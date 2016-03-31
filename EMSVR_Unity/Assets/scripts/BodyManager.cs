@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Vectrosity;
 
 public class BodyManager : MonoBehaviour {
-	
+	public GameObject model_parent;
 	public GameObject model_sun;
 	public GameObject model_earth;
 	public GameObject model_moon;
@@ -25,7 +25,7 @@ public class BodyManager : MonoBehaviour {
 
 	public VectorLine model_earthOrbitLine;
 
-	public bool DEBUG_STATIONARY_MODEL = true;
+	public bool DEBUG_STATIONARY_MODEL = false;
 
 
 	//public float BODIES_FACTOR = 10f;
@@ -34,11 +34,12 @@ public class BodyManager : MonoBehaviour {
 	void Start () {
 		OVR_Camera.transform.SetParent (PlayerPos.transform, true);
 		if(DEBUG_STATIONARY_MODEL == true)
-			model_sun.transform.SetParent (modelStationaryPos.transform, true);
+			model_parent.transform.SetParent (modelStationaryPos.transform, true);
 		else
-			model_sun.transform.SetParent (modelPos.transform, true);
+			model_parent.transform.SetParent (modelPos.transform, true);
+
 		OVR_Camera.transform.localPosition = Vector3.zero;
-		model_sun.transform.localPosition = Vector3.zero;
+		model_parent.transform.localPosition = Vector3.zero;
 
 		VectorLine.SetCamera3D(camera);
 		CreateEarthOrbitLine(10, myModelManager.MODEL_EARTH_SUN_DISTANCE);
