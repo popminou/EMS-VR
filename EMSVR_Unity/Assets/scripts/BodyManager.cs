@@ -8,9 +8,12 @@ public class BodyManager : MonoBehaviour {
 	public GameObject model_sun;
 	public GameObject model_earth;
 	public GameObject model_moon;
+	public GameObject model_earth_mesh;
+
 	public GameObject body_sun;
 	public GameObject body_earth;
 	public GameObject body_moon;
+	public GameObject body_earth_mesh;
 
 	public ModelManager myModelManager;
 	public Transform directionalLight;
@@ -18,10 +21,15 @@ public class BodyManager : MonoBehaviour {
 	public Transform earthCam;
 
 	public GameObject camera;
-	public GameObject PlayerPos;
-	public GameObject OVR_Camera;
-	public GameObject modelPos;
-	public GameObject modelStationaryPos;
+	public GameObject playerPosition;
+	public GameObject groundObservatory;
+	public GameObject skyObservatory;
+	private bool viewingFromGround = true; 
+
+	//	public GameObject PlayerPos;
+//	public GameObject OVR_Camera;
+//	public GameObject modelPos;
+//	public GameObject modelStationaryPos;
 
 	public VectorLine model_earthOrbitLine;
 	//public Texture orbitTexture;
@@ -29,24 +37,51 @@ public class BodyManager : MonoBehaviour {
 
 	public bool DEBUG_STATIONARY_MODEL = false;
 
-
+	private float lastRot = 0f;
 	//public float BODIES_FACTOR = 10f;
 
 	// Use this for initialization
 	void Start () {
-		OVR_Camera.transform.SetParent (PlayerPos.transform, true);
-		if(DEBUG_STATIONARY_MODEL == true)
-			model_parent.transform.SetParent (modelStationaryPos.transform, true);
-		else
-			model_parent.transform.SetParent (modelPos.transform, true);
+		//OVR_Camera.transform.SetParent (PlayerPos.transform, true);
+		//if(DEBUG_STATIONARY_MODEL == true)
+		//	model_parent.transform.SetParent (modelStationaryPos.transform, true);
+		//else
+		//	model_parent.transform.SetParent (modelPos.transform, true);
 
-		OVR_Camera.transform.localPosition = Vector3.zero;
-		model_parent.transform.localPosition = Vector3.zero;
+		//OVR_Camera.transform.localPosition = Vector3.zero;
+		//model_parent.transform.localPosition = Vector3.zero;
 
-		VectorLine.SetCamera3D(camera);
+		//VectorLine.SetCamera3D(camera);
 		//CreateEarthOrbitLine(10, myModelManager.MODEL_EARTH_SUN_DISTANCE);
+
+		SetPlayerPosition (groundObservatory);
 	}
 
+
+	void SetPlayerPosition(GameObject targetPos)
+	{
+		playerPosition.transform.SetParent (targetPos.transform, false);
+		if (viewingFromGround) {
+			//Debug.Log ("OFF");
+			body_earth_mesh.GetComponent<Renderer> ().enabled = false;
+		} else {
+			//Debug.Log("ON");
+			body_earth_mesh.GetComponent<Renderer> ().enabled = true;
+		}
+
+	}
+
+	public void ToggleView()
+	{
+		viewingFromGround = !viewingFromGround;
+		if (viewingFromGround) {
+			SetPlayerPosition (groundObservatory);
+		} else {
+			SetPlayerPosition (skyObservatory);
+		}
+
+			
+	}
 	// Update is called once per frame
 	void Update ()
 	{
@@ -66,7 +101,12 @@ public class BodyManager : MonoBehaviour {
 		// Bodies
 		body_earth.transform.localPosition = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.BODY_EARTH_SUN_DISTANCE + body_sun.transform.localPosition;
 		body_moon.transform.localPosition = new Vector3 (moonPos.x, moonPos.z, moonPos.y) * myModelManager.BODY_MOON_EARTH_DISTANCE + body_earth.transform.localPosition;
-
+		float rotDiff = earthPos.rot - lastRot;
+		lastRot = earthPos.rot;
+		//body_earth_mesh.transform.RotateAround (body_earth.transform.position, Vector3.up, rotDiff);
+		body_earth_mesh.transform.localRotation = Quaternion.Euler(0f,earthPos.rot,0f);
+		//model_earth_mesh.transform.RotateAround (model_earth_mesh.transform.position, Vector3.up, rotDiff);
+		model_earth_mesh.transform.localRotation = Quaternion.Euler(0f,earthPos.rot,0f);
 
 		// Model
 		model_earth.transform.localPosition = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.MODEL_EARTH_SUN_DISTANCE + model_sun.transform.localPosition;
