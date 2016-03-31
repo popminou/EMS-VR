@@ -29,7 +29,7 @@ public class BodyManager : MonoBehaviour {
 
 	public bool DEBUG_STATIONARY_MODEL = false;
 
-
+	private float lastRot = 0f;
 	//public float BODIES_FACTOR = 10f;
 
 	// Use this for initialization
@@ -66,7 +66,9 @@ public class BodyManager : MonoBehaviour {
 		// Bodies
 		body_earth.transform.localPosition = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.BODY_EARTH_SUN_DISTANCE + body_sun.transform.localPosition;
 		body_moon.transform.localPosition = new Vector3 (moonPos.x, moonPos.z, moonPos.y) * myModelManager.BODY_MOON_EARTH_DISTANCE + body_earth.transform.localPosition;
-
+		float rotDiff = earthPos.rot - lastRot;
+		lastRot = earthPos.rot;
+		body_earth.transform.RotateAround (body_earth.transform.position, Vector3.up, rotDiff);
 
 		// Model
 		model_earth.transform.localPosition = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.MODEL_EARTH_SUN_DISTANCE + model_sun.transform.localPosition;
