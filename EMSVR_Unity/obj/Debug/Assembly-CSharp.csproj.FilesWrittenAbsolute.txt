@@ -33,3 +33,5 @@
 /Users/obrassard/Projects/EMS-VR/EMSVR_Unity/Temp/bin/Debug/Unity.CecilTools.dll
 /Users/obrassard/Projects/EMS-VR/EMSVR_Unity/Temp/bin/Debug/Mono.Cecil.Pdb.dll
 /Users/obrassard/Projects/EMS-VR/EMSVR_Unity/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/obrassard/Projects/EMS-VR/EMSVR_Unity/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
+/Users/obrassard/Projects/EMS-VR/EMSVR_Unity/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb
