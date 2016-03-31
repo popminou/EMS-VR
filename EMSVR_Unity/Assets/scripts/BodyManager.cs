@@ -48,7 +48,11 @@ public class BodyManager : MonoBehaviour {
 	void Update ()
 	{
 		SetBodyPositions ();
-		UpdateVectorLines();
+	}
+
+	void LateUpdate ()
+	{
+		UpdateOrbitLines();
 	}
 
 	void SetBodyPositions()
@@ -57,15 +61,13 @@ public class BodyManager : MonoBehaviour {
 		ModelManager.BodyPos moonPos = myModelManager.GetMoonPos ();
 
 		// Bodies
-		body_earth.transform.position = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.BODY_EARTH_SUN_DISTANCE + body_sun.transform.position;
-		body_moon.transform.position = new Vector3 (moonPos.x, moonPos.z, moonPos.y) * myModelManager.BODY_MOON_EARTH_DISTANCE + body_earth.transform.position;
+		body_earth.transform.localPosition = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.BODY_EARTH_SUN_DISTANCE + body_sun.transform.localPosition;
+		body_moon.transform.localPosition = new Vector3 (moonPos.x, moonPos.z, moonPos.y) * myModelManager.BODY_MOON_EARTH_DISTANCE + body_earth.transform.localPosition;
+
 
 		// Model
-		//ModelManager.pos earthPos = myModelManager.GetEarthPos ();
-		//ModelManager.pos moonPos = myModelManager.GetMoonPos ();
-
-		model_earth.transform.position = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.MODEL_EARTH_SUN_DISTANCE + model_sun.transform.position;
-		model_moon.transform.position = new Vector3 (moonPos.x, moonPos.z, moonPos.y) * myModelManager.MODEL_MOON_EARTH_DISTANCE + model_earth.transform.position;
+		model_earth.transform.localPosition = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.MODEL_EARTH_SUN_DISTANCE + model_sun.transform.localPosition;
+		model_moon.transform.localPosition = new Vector3 (moonPos.x, moonPos.z, moonPos.y) * myModelManager.MODEL_MOON_EARTH_DISTANCE + model_earth.transform.localPosition;
 		directionalLight.LookAt (body_earth.transform.position);
 		directionalLight_model.LookAt (model_earth.transform.position);
 		earthCam.LookAt (body_moon.transform.position);
@@ -97,11 +99,19 @@ public class BodyManager : MonoBehaviour {
 		//model_earthOrbitLine.gameObject.transform.SetParent(model_sun.transform, false);
 		//model_earthOrbitLine.drawTransform = model_sun.transform;
 		//model_earthOrbitLine.gameObject.transform.localScale = new Vector3(model_sun.transform.localScale.x, model_sun.transform.localScale.y, model_sun.transform.localScale.z);
+
+
 	}
 
-	void UpdateVectorLines ()
+	void UpdateOrbitLines ()
 	{
+		//List<Vector3> modelEarthOrbitPoints = model_earthOrbitLine.points3;
+		Matrix4x4 earthOrbitMatrix = new Matrix4x4();
+		earthOrbitMatrix.SetTRS(model_sun.transform.position, Quaternion.identity, new Vector3(1f, 1f, 1f));
+		model_earthOrbitLine.matrix = earthOrbitMatrix;
+			
 		if(model_earthOrbitLine != null)
 			model_earthOrbitLine.Draw3D();
+
 	}
 }
