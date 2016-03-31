@@ -21,8 +21,11 @@ public class BodyManager : MonoBehaviour {
 	public GameObject PlayerPos;
 	public GameObject OVR_Camera;
 	public GameObject modelPos;
+	public GameObject modelStationaryPos;
 
 	public VectorLine model_earthOrbitLine;
+
+	public bool DEBUG_STATIONARY_MODEL = true;
 
 
 	//public float BODIES_FACTOR = 10f;
@@ -30,7 +33,10 @@ public class BodyManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		OVR_Camera.transform.SetParent (PlayerPos.transform, true);
-		//model_sun.transform.SetParent (modelPos.transform, true);
+		if(DEBUG_STATIONARY_MODEL == true)
+			model_sun.transform.SetParent (modelStationaryPos.transform, true);
+		else
+			model_sun.transform.SetParent (modelPos.transform, true);
 		OVR_Camera.transform.localPosition = Vector3.zero;
 		model_sun.transform.localPosition = Vector3.zero;
 
@@ -85,57 +91,12 @@ public class BodyManager : MonoBehaviour {
 		orbitLinePts.Add(new Vector3(positions[0].x * _sizeFactor, 0, positions[0].y * _sizeFactor));
 		//orbitLinePts.Add(positions[0] * _sizeFactor);
 			
-		model_earthOrbitLine = new VectorLine("model_earthOrbitLine", orbitLinePts, 10, LineType.Continuous);
+		model_earthOrbitLine = new VectorLine("model_earthOrbitLine", orbitLinePts, 0.005f, LineType.Continuous);
 		model_earthOrbitLine.color = Color.red;
 
 		//model_earthOrbitLine.gameObject.transform.SetParent(model_sun.transform, false);
-		model_earthOrbitLine.drawTransform = model_sun.transform;
-
-
-
-		//model_earthOrbitLine.
-		//model_earthOrbitLine = new VectorLine(
-		/*	
-		var segmentCount = numSegments;
-		var geometry = new THREE.Geometry();
-		var material_base = new THREE.LineBasicMaterial({ color: color, linewidth: 0.5 });
-		var material_alpha = new THREE.LineBasicMaterial({ color: color, linewidth: 2.0 });
-		material_alpha.transparent = true;
-		material_alpha.opacity = 0.5;
-		material_alpha.blending = THREE.NormalBlending;
-
-		var timeInc = ;
-		var positions = modelManager.calculateMultipleEarthPos(0, timeConfig.SYNODIC_YEAR, numSegments + 1, simConfig.USE_KEPLER_MODEL, false);
-
-		for(var i = 0; i < positions.length; i++)
-		{
-			geometry.vertices.push(
-		        new THREE.Vector3(
-		            positions[i].x * factor,
-		            sceneConfig.EARTH_ORBIT_OFFSET_Y,
-		            positions[i].y * factor
-		            )); 
-
-			//Utils.log("Earth orbit pos: " + (positions[i].x * factor) + ";" + (positions[i].y * factor));
-		}
-		// complete the circle
-		geometry.vertices.push(
-	        new THREE.Vector3(
-	            positions[0].x * factor,
-	            sceneConfig.EARTH_ORBIT_OFFSET_Y,
-	            positions[0].y * factor
-	            ));
-
-		var line_base = new THREE.Line(geometry, material_base);
-		var line_alpha = new THREE.Line(geometry, material_alpha);
-
-    	var orbitObject = new THREE.Object3D();
-    	orbitObject.add(line_alpha);
-    	orbitObject.add(line_base);
-
-		//return new THREE.Line(geometry, material);
-		return orbitObject;
-		*/
+		//model_earthOrbitLine.drawTransform = model_sun.transform;
+		//model_earthOrbitLine.gameObject.transform.localScale = new Vector3(model_sun.transform.localScale.x, model_sun.transform.localScale.y, model_sun.transform.localScale.z);
 	}
 
 	void UpdateVectorLines ()
