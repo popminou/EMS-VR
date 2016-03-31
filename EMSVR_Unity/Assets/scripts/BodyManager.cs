@@ -2,13 +2,10 @@
 using System.Collections;
 
 public class BodyManager : MonoBehaviour {
-
-	public GameObject model_parent;
+	
 	public GameObject model_sun;
 	public GameObject model_earth;
 	public GameObject model_moon;
-
-	public GameObject body_parent;
 	public GameObject body_sun;
 	public GameObject body_earth;
 	public GameObject body_moon;
@@ -20,6 +17,9 @@ public class BodyManager : MonoBehaviour {
 	public GameObject PlayerPos;
 	public GameObject OVR_Camera;
 	public GameObject modelPos;
+
+
+	public float BODIES_FACTOR = 10f;
 
 	// Use this for initialization
 	void Start () {
@@ -42,12 +42,14 @@ public class BodyManager : MonoBehaviour {
 		ModelManager.pos moonPos = myModelManager.GetMoonPos ();
 
 		// Bodies
-		body_earth.transform.localPosition = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.BODY_EARTH_SUN_DISTANCE + body_sun.transform.localPosition;
-		body_moon.transform.localPosition = new Vector3 (moonPos.x, moonPos.z, moonPos.y) * myModelManager.BODY_MOON_EARTH_DISTANCE + body_earth.transform.localPosition;
+		body_earth.transform.position = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * BODIES_FACTOR + body_sun.transform.position;
+		body_moon.transform.position = new Vector3 (moonPos.x, moonPos.z, moonPos.y) * BODIES_FACTOR + body_earth.transform.position;
 
 		// Model
-		model_earth.transform.localPosition = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.MODEL_EARTH_SUN_DISTANCE + model_sun.transform.localPosition;
-		model_moon.transform.localPosition = new Vector3 (moonPos.x, moonPos.z, moonPos.y) * myModelManager.MODEL_MOON_EARTH_DISTANCE + model_earth.transform.localPosition;
+		//ModelManager.pos earthPos = myModelManager.GetEarthPos ();
+		//ModelManager.pos moonPos = myModelManager.GetMoonPos ();
+		model_earth.transform.position = new Vector3 (earthPos.x, earthPos.z, earthPos.y) + model_sun.transform.position;
+		model_moon.transform.position = new Vector3 (moonPos.x, moonPos.z, moonPos.y) + model_earth.transform.position;
 		directionalLight.LookAt (model_earth.transform.position);
 		earthCam.LookAt (model_moon.transform.position);
 	

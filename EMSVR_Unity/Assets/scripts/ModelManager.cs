@@ -111,7 +111,7 @@ public class ModelManager : MonoBehaviour {
 	void calculateEarthPos(float time)
 	{
 		float angle = mod(-(EARTH_STARTING_ANGLE + (360 * ((EARTH_ORBIT_RATE * time) % 1))), 360f);
-		Vector2 pos = getOffestFromAngleAndDistance(angle, /*EARTH_SUN_DISTANCE*/1);
+		Vector2 pos = getOffestFromAngleAndDistance(angle, EARTH_SUN_DISTANCE);
 
 		earthPos.x = pos.x;
 		earthPos.y = pos.y;
@@ -138,12 +138,12 @@ public class ModelManager : MonoBehaviour {
 
 
 		//Height of moon is sin of degree 		
-		float flatOrbitWidth =  /*EARTH_MOON_DISTANCE*/1 * Mathf.Cos(MOON_ORBITAL_TILT  * Mathf.PI / 180);
+		float flatOrbitWidth =  EARTH_MOON_DISTANCE * Mathf.Cos(MOON_ORBITAL_TILT  * Mathf.PI / 180);
 		float xOffset = flatOrbitWidth * Mathf.Cos(radAngle);
-		float yOffset = (/*EARTH_MOON_DISTANCE*/1) * Mathf.Sin(radAngle);
+		float yOffset = (EARTH_MOON_DISTANCE) * Mathf.Sin(radAngle);
 		float zAngle = MOON_ORBITAL_TILT * Mathf.Cos(radOrbitalTiltAngle);
 		float radZAngle = zAngle * Mathf.PI / 180; 
-		float zOffset = -(/*EARTH_MOON_DISTANCE*/1 * Mathf.Sin(radZAngle));	
+		float zOffset = -(EARTH_MOON_DISTANCE * Mathf.Sin(radZAngle));	
 
 
 			//Utils.log("At time " + time + ", z offset is " + zOffset);
@@ -202,13 +202,5 @@ public class ModelManager : MonoBehaviour {
 
 	static float STARTING_ORBITAL_ROTATION_OFFSET = 16.5f;
 	static float ORBITAL_ROTATION_OFFSET =0f;// 1/timeConfig.SYNODIC_YEARf; //1/timeConfig.SYNODIC_YEAR + 1/(timeConfig.SYNODIC_YEAR * 30)f; //amount that the orbital plane rotates
-
-
-
-	public float BODY_EARTH_SUN_DISTANCE = 400f;
-	public float BODY_MOON_EARTH_DISTANCE = 80f;
-
-	public float MODEL_EARTH_SUN_DISTANCE = 10f;
-	public float MODEL_MOON_EARTH_DISTANCE = 1f;
 
 }
