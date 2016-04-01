@@ -38,9 +38,12 @@ public class BodyManager : MonoBehaviour {
 //	public GameObject modelPos;
 //	public GameObject modelStationaryPos;
 
-	public VectorLine model_earthOrbitLine;
+	//public VectorLine model_earthOrbitLine;
 	//public Texture orbitTexture;
-	public Material orbitMaterial;
+	//public Material orbitMaterial;
+
+	public GameObject playerIndicatorGround;
+	public GameObject playerIndicatorSky;
 
 	public bool DEBUG_STATIONARY_MODEL = false;
 
@@ -79,6 +82,8 @@ public class BodyManager : MonoBehaviour {
 			mountains.SetActive (false);
 		}
 
+		SetPlayerIndicator(viewingFromGround);
+
 	}
 
 	public void ToggleView()
@@ -101,7 +106,8 @@ public class BodyManager : MonoBehaviour {
 
 	void LateUpdate ()
 	{
-		UpdateOrbitLines();
+		//UpdateOrbitLines();
+		UpdateCamera();
 	}
 
 	void SetBodyPositions()
@@ -128,6 +134,7 @@ public class BodyManager : MonoBehaviour {
 	}
 
 
+<<<<<<< HEAD
 	void SetCameraColor()
 	{
 		if (viewingFromGround) {
@@ -137,37 +144,60 @@ public class BodyManager : MonoBehaviour {
 	}
 
 	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
+=======
+//	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
+//	{
+//		//float timeInc = ModelManager.SYNODIC_YEAR / _segmentCount;
+//		Vector3[] positions = myModelManager.calculateMultipleEarthPos(0, ModelManager.SYNODIC_YEAR, _segmentCount + 1);
+//
+//		List<Vector3> orbitLinePts = new List<Vector3>();
+//		for(int i = 0; i < _segmentCount + 1; i++)
+//		{
+//			//Debug.Log("" + i + " : " + positions[i]);
+//
+//			orbitLinePts.Add(new Vector3(positions[i].x * _sizeFactor, 0, positions[i].y * _sizeFactor));
+//			//orbitLinePts.Add(positions[i] * _sizeFactor);
+//
+//			Debug.Log("" + i + " : " + orbitLinePts[i]);
+//		}
+//		orbitLinePts.Add(new Vector3(positions[0].x * _sizeFactor, 0, positions[0].y * _sizeFactor));
+//		//orbitLinePts.Add(positions[0] * _sizeFactor);
+//			
+//		model_earthOrbitLine = new VectorLine("model_earthOrbitLine", orbitLinePts, 1f, LineType.Continuous);
+//		if(orbitMaterial != null)
+//			model_earthOrbitLine.material = orbitMaterial;
+//
+//		model_earthOrbitLine.drawTransform = model_sun.transform;
+//
+//
+//	}
+//		
+//
+//	void UpdateOrbitLines ()
+//	{
+//		if(model_earthOrbitLine != null)
+//			model_earthOrbitLine.Draw3D();
+//
+//	}
+
+	public float posFactor = 0.08f;
+
+	private void SetPlayerIndicator (bool _viewFromGround)
+>>>>>>> d7f8d260c6208e6e4d5fc194a83b27d8fadf282e
 	{
-		//float timeInc = ModelManager.SYNODIC_YEAR / _segmentCount;
-		Vector3[] positions = myModelManager.calculateMultipleEarthPos(0, ModelManager.SYNODIC_YEAR, _segmentCount + 1);
-
-		List<Vector3> orbitLinePts = new List<Vector3>();
-		for(int i = 0; i < _segmentCount + 1; i++)
-		{
-			//Debug.Log("" + i + " : " + positions[i]);
-
-			orbitLinePts.Add(new Vector3(positions[i].x * _sizeFactor, 0, positions[i].y * _sizeFactor));
-			//orbitLinePts.Add(positions[i] * _sizeFactor);
-
-			Debug.Log("" + i + " : " + orbitLinePts[i]);
-		}
-		orbitLinePts.Add(new Vector3(positions[0].x * _sizeFactor, 0, positions[0].y * _sizeFactor));
-		//orbitLinePts.Add(positions[0] * _sizeFactor);
-			
-		model_earthOrbitLine = new VectorLine("model_earthOrbitLine", orbitLinePts, 1f, LineType.Continuous);
-		if(orbitMaterial != null)
-			model_earthOrbitLine.material = orbitMaterial;
-
-		model_earthOrbitLine.drawTransform = model_sun.transform;
-
-
+		if(playerIndicatorGround != null)
+			playerIndicatorGround.SetActive( _viewFromGround );
+		if(playerIndicatorSky != null)
+			playerIndicatorSky.SetActive( !_viewFromGround );
 	}
-		
 
-	void UpdateOrbitLines ()
+
+	void UpdateCamera ()
 	{
-		if(model_earthOrbitLine != null)
-			model_earthOrbitLine.Draw3D();
-
+		if(camera.activeSelf)
+		{
+			camera.transform.localPosition = new Vector3(model_earth.transform.localPosition.x, model_earth.transform.localPosition.y + 40, model_earth.transform.localPosition.z);
+			camera.transform.LookAt( model_earth.transform);
+		}
 	}
 }
