@@ -137,7 +137,7 @@ public class BodyManager : MonoBehaviour {
 		directionalLight_model.LookAt (model_earth.transform.position);
 		earthCam.LookAt (body_moon.transform.position);
 	
-		SetCameraColor (ModelManager.mod(earthPos.rot, 360f) + ModelManager.mod(earthPos.angle, 360f));
+		SetCameraColor (ModelManager.mod(earthPos.rot - 40f, 360f) + ModelManager.mod(earthPos.angle, 360f));
 
 	}
 
