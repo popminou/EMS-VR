@@ -81,10 +81,12 @@ public class BodyManager : MonoBehaviour {
 			Debug.Log ("GROUND");
 			body_earth_mesh_scaled.GetComponent<Renderer> ().enabled = false;
 			mountains.SetActive (true);
+			RenderSettings.ambientIntensity = 0.0f;
 		} else {
 			Debug.Log("NOTGROUND");
 			body_earth_mesh_scaled.GetComponent<Renderer> ().enabled = true;
 			mountains.SetActive (false);
+			RenderSettings.ambientIntensity = .23f;
 		}
 
 		SetPlayerIndicator(viewingFromGround);
