@@ -33,9 +33,9 @@ public class BodyManager : MonoBehaviour {
 //	public GameObject modelPos;
 //	public GameObject modelStationaryPos;
 
-	public VectorLine model_earthOrbitLine;
+	//public VectorLine model_earthOrbitLine;
 	//public Texture orbitTexture;
-	public Material orbitMaterial;
+	//public Material orbitMaterial;
 
 	public GameObject playerIndicatorGround;
 	public GameObject playerIndicatorSky;
@@ -127,40 +127,40 @@ public class BodyManager : MonoBehaviour {
 	}
 
 
-	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
-	{
-		//float timeInc = ModelManager.SYNODIC_YEAR / _segmentCount;
-		Vector3[] positions = myModelManager.calculateMultipleEarthPos(0, ModelManager.SYNODIC_YEAR, _segmentCount + 1);
-
-		List<Vector3> orbitLinePts = new List<Vector3>();
-		for(int i = 0; i < _segmentCount + 1; i++)
-		{
-			//Debug.Log("" + i + " : " + positions[i]);
-
-			orbitLinePts.Add(new Vector3(positions[i].x * _sizeFactor, 0, positions[i].y * _sizeFactor));
-			//orbitLinePts.Add(positions[i] * _sizeFactor);
-
-			Debug.Log("" + i + " : " + orbitLinePts[i]);
-		}
-		orbitLinePts.Add(new Vector3(positions[0].x * _sizeFactor, 0, positions[0].y * _sizeFactor));
-		//orbitLinePts.Add(positions[0] * _sizeFactor);
-			
-		model_earthOrbitLine = new VectorLine("model_earthOrbitLine", orbitLinePts, 1f, LineType.Continuous);
-		if(orbitMaterial != null)
-			model_earthOrbitLine.material = orbitMaterial;
-
-		model_earthOrbitLine.drawTransform = model_sun.transform;
-
-
-	}
-		
-
-	void UpdateOrbitLines ()
-	{
-		if(model_earthOrbitLine != null)
-			model_earthOrbitLine.Draw3D();
-
-	}
+//	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
+//	{
+//		//float timeInc = ModelManager.SYNODIC_YEAR / _segmentCount;
+//		Vector3[] positions = myModelManager.calculateMultipleEarthPos(0, ModelManager.SYNODIC_YEAR, _segmentCount + 1);
+//
+//		List<Vector3> orbitLinePts = new List<Vector3>();
+//		for(int i = 0; i < _segmentCount + 1; i++)
+//		{
+//			//Debug.Log("" + i + " : " + positions[i]);
+//
+//			orbitLinePts.Add(new Vector3(positions[i].x * _sizeFactor, 0, positions[i].y * _sizeFactor));
+//			//orbitLinePts.Add(positions[i] * _sizeFactor);
+//
+//			Debug.Log("" + i + " : " + orbitLinePts[i]);
+//		}
+//		orbitLinePts.Add(new Vector3(positions[0].x * _sizeFactor, 0, positions[0].y * _sizeFactor));
+//		//orbitLinePts.Add(positions[0] * _sizeFactor);
+//			
+//		model_earthOrbitLine = new VectorLine("model_earthOrbitLine", orbitLinePts, 1f, LineType.Continuous);
+//		if(orbitMaterial != null)
+//			model_earthOrbitLine.material = orbitMaterial;
+//
+//		model_earthOrbitLine.drawTransform = model_sun.transform;
+//
+//
+//	}
+//		
+//
+//	void UpdateOrbitLines ()
+//	{
+//		if(model_earthOrbitLine != null)
+//			model_earthOrbitLine.Draw3D();
+//
+//	}
 
 	public float posFactor = 0.08f;
 
