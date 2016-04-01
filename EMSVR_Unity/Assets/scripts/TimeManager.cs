@@ -10,7 +10,7 @@ public class TimeManager : MonoBehaviour {
 
 	public float INPUT_SPEED_FACTOR = 3;
 
-	float defaultTimeMult;
+	float defaultTimeMult = .5f;
 
 	bool timePaused = false; 
 	// Use this for initialization
@@ -22,8 +22,8 @@ public class TimeManager : MonoBehaviour {
 	void Update () {
 		if (timeMultiplier > MAX_TIME)
 			timeMultiplier = MAX_TIME;
-		if (timeMultiplier < -MAX_TIME)
-			timeMultiplier = -MAX_TIME;
+		if (timeMultiplier < 0)
+			timeMultiplier = 0;
 		if(timePaused == false)
 			simTime += Time.deltaTime * timeMultiplier;
 	}
@@ -56,5 +56,6 @@ public class TimeManager : MonoBehaviour {
 	public void TogglePauseTime()
 	{
 		timePaused = !timePaused;
+		timeMultiplier = defaultTimeMult;
 	}
 }
