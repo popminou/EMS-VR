@@ -134,7 +134,6 @@ public class BodyManager : MonoBehaviour {
 	}
 
 
-<<<<<<< HEAD
 	void SetCameraColor()
 	{
 		if (viewingFromGround) {
@@ -143,8 +142,7 @@ public class BodyManager : MonoBehaviour {
 		}
 	}
 
-	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
-=======
+//	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
 //	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
 //	{
 //		//float timeInc = ModelManager.SYNODIC_YEAR / _segmentCount;
@@ -183,7 +181,6 @@ public class BodyManager : MonoBehaviour {
 	public float posFactor = 0.08f;
 
 	private void SetPlayerIndicator (bool _viewFromGround)
->>>>>>> d7f8d260c6208e6e4d5fc194a83b27d8fadf282e
 	{
 		if(playerIndicatorGround != null)
 			playerIndicatorGround.SetActive( _viewFromGround );
