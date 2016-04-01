@@ -37,6 +37,9 @@ public class BodyManager : MonoBehaviour {
 	//public Texture orbitTexture;
 	public Material orbitMaterial;
 
+	public GameObject playerIndicatorGround;
+	public GameObject playerIndicatorSky;
+
 	public bool DEBUG_STATIONARY_MODEL = false;
 
 	private float lastRot = 0f;
@@ -71,6 +74,8 @@ public class BodyManager : MonoBehaviour {
 			body_earth_mesh_scaled.GetComponent<Renderer> ().enabled = true;
 		}
 
+		SetPlayerIndicator(viewingFromGround);
+
 	}
 
 	public void ToggleView()
@@ -92,7 +97,8 @@ public class BodyManager : MonoBehaviour {
 
 	void LateUpdate ()
 	{
-		UpdateOrbitLines();
+		//UpdateOrbitLines();
+		UpdateCamera();
 	}
 
 	void SetBodyPositions()
@@ -152,5 +158,25 @@ public class BodyManager : MonoBehaviour {
 		if(model_earthOrbitLine != null)
 			model_earthOrbitLine.Draw3D();
 
+	}
+
+	public float posFactor = 0.08f;
+
+	private void SetPlayerIndicator (bool _viewFromGround)
+	{
+		if(playerIndicatorGround != null)
+			playerIndicatorGround.SetActive( _viewFromGround );
+		if(playerIndicatorSky != null)
+			playerIndicatorSky.SetActive( !_viewFromGround );
+	}
+
+
+	void UpdateCamera ()
+	{
+		if(camera.activeSelf)
+		{
+			camera.transform.localPosition = new Vector3(model_earth.transform.localPosition.x, model_earth.transform.localPosition.y + 40, model_earth.transform.localPosition.z);
+			camera.transform.LookAt( model_earth.transform);
+		}
 	}
 }
