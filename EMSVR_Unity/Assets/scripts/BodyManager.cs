@@ -105,8 +105,7 @@ public class BodyManager : MonoBehaviour {
 		// Bodies
 		body_earth.transform.localPosition = new Vector3 (earthPos.x, earthPos.z, earthPos.y) * myModelManager.BODY_EARTH_SUN_DISTANCE + body_sun.transform.localPosition;
 		body_moon.transform.localPosition = new Vector3 (moonPos.x, moonPos.z, moonPos.y) * myModelManager.BODY_MOON_EARTH_DISTANCE + body_earth.transform.localPosition;
-		float rotDiff = earthPos.rot - lastRot;
-		lastRot = earthPos.rot;
+	
 		//body_earth_mesh.transform.RotateAround (body_earth.transform.position, Vector3.up, rotDiff);
 		body_earth_mesh.transform.localRotation = Quaternion.Euler(0f,earthPos.rot,0f);
 		//model_earth_mesh.transform.RotateAround (model_earth_mesh.transform.position, Vector3.up, rotDiff);
@@ -148,6 +147,7 @@ public class BodyManager : MonoBehaviour {
 
 
 	}
+		
 
 	void UpdateOrbitLines ()
 	{
