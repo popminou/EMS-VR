@@ -24,11 +24,15 @@ public class BodyManager : MonoBehaviour {
 
 	public Camera playerView;
 
-	public GameObject camera;
+	//public GameObject camera;
 	public GameObject playerPosition;
 	public GameObject groundObservatory;
 	public GameObject skyObservatory;
 
+
+	public Color ground_nightColor;
+	public Color ground_dayColor;
+	public Color spaceColor;
 
 	public TimeManager timeManager;
 	private bool viewingFromGround = true; 
@@ -47,7 +51,7 @@ public class BodyManager : MonoBehaviour {
 
 	public bool DEBUG_STATIONARY_MODEL = false;
 
-	private float lastRot = 0f;
+
 	//public float BODIES_FACTOR = 10f;
 
 	// Use this for initialization
@@ -101,13 +105,13 @@ public class BodyManager : MonoBehaviour {
 	void Update ()
 	{
 		SetBodyPositions ();
-		SetCameraColor ();
+		//SetCameraColor ();
 	}
 
 	void LateUpdate ()
 	{
 		//UpdateOrbitLines();
-		UpdateCamera();
+		//UpdateCamera();
 	}
 
 	void SetBodyPositions()
@@ -131,16 +135,27 @@ public class BodyManager : MonoBehaviour {
 		directionalLight_model.LookAt (model_earth.transform.position);
 		earthCam.LookAt (body_moon.transform.position);
 	
+		//SetCameraColor (ModelManager.mod(earthPos.rot, 360f) - ModelManager.mod(earthPos.angle, 360f));
 	}
 
 
-	void SetCameraColor()
+	void SetCameraColor(float rot)
 	{
+		Debug.Log ("adjusted Rot = " + rot);
+		//earthRot += 210;
+		//Debug.Log ("earthRot " + earthRot);
+		//float colorLerp = (Mathf.Sin((earthRot) * Mathf.Deg2Rad) + 1)/2f;
+		//float colorLerp = Mathf.Abs (earthRot - 180) / 360;
+		//float colorLerp = Mathf.abs(earthRot - 110)
+		float colorLerp = 0;// myModelManager.GetCurrentDayFactor();
+		Debug.Log (colorLerp);
 		if (viewingFromGround) {
-			//camera.
+			playerView.backgroundColor = Color.Lerp (ground_nightColor, ground_dayColor, colorLerp);
 		} else {
+			playerView.backgroundColor = spaceColor;
 		}
 	}
+	
 
 //	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
 //	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
@@ -188,7 +203,7 @@ public class BodyManager : MonoBehaviour {
 			playerIndicatorSky.SetActive( !_viewFromGround );
 	}
 
-
+	/*
 	void UpdateCamera ()
 	{
 		if(camera.activeSelf)
@@ -197,4 +212,5 @@ public class BodyManager : MonoBehaviour {
 			camera.transform.LookAt( model_earth.transform);
 		}
 	}
+	*/
 }

@@ -58,4 +58,6 @@ public class TimeManager : MonoBehaviour {
 		timePaused = !timePaused;
 		timeMultiplier = defaultTimeMult;
 	}
+
+
 }

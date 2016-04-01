@@ -20,6 +20,9 @@ public class ModelManager : MonoBehaviour {
 	public BodyPos GetSunPos(){ return sunPos;}
 
 
+	public float earthAngle = 0f;
+	public float earthRot = 0f;
+
 	public struct BodyPos
 	{
 		public float x;
@@ -41,7 +44,7 @@ public class ModelManager : MonoBehaviour {
 		}
 	};
 
-	float mod(float number, float limit)
+	static public float mod(float number, float limit)
 	{
 		while(number < 0)
 		{
@@ -89,6 +92,10 @@ public class ModelManager : MonoBehaviour {
 	public void updateModel()
 	{
 		updateModelPositions();
+
+		earthAngle = earthPos.angle;
+		earthRot = earthPos.rot;
+
 	}
 
 	public void updateModelPositions()
@@ -117,7 +124,7 @@ public class ModelManager : MonoBehaviour {
 		earthPos.x = BodyPos.x;
 		earthPos.y = BodyPos.y;
 		earthPos.z = 0f;
-		earthPos.rot = calculateRotation(time, EARTH_ROTATION_RATE);
+		earthPos.rot =  calculateRotation(time, EARTH_ROTATION_RATE);
 		earthPos.angle = angle;
 
 	}
@@ -200,6 +207,12 @@ public class ModelManager : MonoBehaviour {
 
 	}
 
+	public float GetCurrentDayFactor()
+	{
+		Debug.Log("Day time: " + (myTimeManager.getSimTime () % SYNODIC_DAY));
+		return (myTimeManager.getSimTime () % SYNODIC_DAY) / SYNODIC_DAY;
+	}
+
 
 	static float SECOND = 1f;
 	static float MINUTE = 60f * SECOND;
@@ -212,7 +225,9 @@ public class ModelManager : MonoBehaviour {
 	static float SYNODIC_MONTH = 29f * DAY + 12f * HOUR + 44f * MINUTE + 2.8016f * SECOND;
 	static float LUNAR_MONTH = SYNODIC_MONTH; //In case its easier to remember :P
 	public static float SYNODIC_YEAR = 365f * DAY + 5f * HOUR + 48f * MINUTE + 46f * SECOND;
-	static float SOLAR_DAY = 24.47f * DAY;
+	static float SOLAR_DAY = 24.47f * HOUR;
+
+	static float SYNODIC_DAY = 23f * HOUR + 56f * MINUTE + 4 * SECOND;
 
 	static float SIDEREAL_MONTH = 2347126f + 9845f; 
 
