@@ -9,7 +9,7 @@ public class BodyManager : MonoBehaviour {
 	public GameObject model_earth;
 	public GameObject model_moon;
 	public GameObject model_earth_mesh;
-
+	public GameObject mountains;
 
 	public GameObject body_sun;
 	public GameObject body_earth;
@@ -64,11 +64,13 @@ public class BodyManager : MonoBehaviour {
 	{
 		playerPosition.transform.SetParent (targetPos.transform, false);
 		if (viewingFromGround) {
-			//Debug.Log ("OFF");
+			Debug.Log ("GROUND");
 			body_earth_mesh_scaled.GetComponent<Renderer> ().enabled = false;
+			mountains.SetActive (true);
 		} else {
-			//Debug.Log("ON");
+			Debug.Log("NOTGROUND");
 			body_earth_mesh_scaled.GetComponent<Renderer> ().enabled = true;
+			mountains.SetActive (false);
 		}
 
 	}

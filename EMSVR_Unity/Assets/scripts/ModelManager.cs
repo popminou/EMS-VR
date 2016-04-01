@@ -241,7 +241,7 @@ public class ModelManager : MonoBehaviour {
 	static float ORBITAL_ANGLE_OFFSET = 158.5f;//166f; //341.4   //Without this offset, z = 0 when x = 0, which is NOT the case
 
 	static float EARTH_STARTING_ANGLE = 0f;
-	static float MOON_STARTING_ANGLE = 31.5f;//211.5f;
+	static float MOON_STARTING_ANGLE = 171.5f;//211.5f;
 
 	static float STARTING_ORBITAL_ROTATION_OFFSET = 16.5f;
 	static float ORBITAL_ROTATION_OFFSET =0f;// 1/timeConfig.SYNODIC_YEARf; //1/timeConfig.SYNODIC_YEAR + 1/(timeConfig.SYNODIC_YEAR * 30)f; //amount that the orbital plane rotates
