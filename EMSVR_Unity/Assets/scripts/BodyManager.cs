@@ -22,10 +22,15 @@ public class BodyManager : MonoBehaviour {
 	public Transform directionalLight_model;
 	public Transform earthCam;
 
+	public Camera playerView;
+
 	public GameObject camera;
 	public GameObject playerPosition;
 	public GameObject groundObservatory;
 	public GameObject skyObservatory;
+
+
+	public TimeManager timeManager;
 	private bool viewingFromGround = true; 
 
 	//	public GameObject PlayerPos;
@@ -60,6 +65,7 @@ public class BodyManager : MonoBehaviour {
 		//CreateEarthOrbitLine(10, myModelManager.MODEL_EARTH_SUN_DISTANCE);
 
 		SetPlayerPosition (groundObservatory);
+		timeManager = GameObject.FindObjectOfType<TimeManager> ();
 	}
 
 
@@ -95,6 +101,7 @@ public class BodyManager : MonoBehaviour {
 	void Update ()
 	{
 		SetBodyPositions ();
+		SetCameraColor ();
 	}
 
 	void LateUpdate ()
@@ -127,6 +134,15 @@ public class BodyManager : MonoBehaviour {
 	}
 
 
+	void SetCameraColor()
+	{
+		if (viewingFromGround) {
+			//camera.
+		} else {
+		}
+	}
+
+//	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
 //	void CreateEarthOrbitLine (int _segmentCount, float _sizeFactor)
 //	{
 //		//float timeInc = ModelManager.SYNODIC_YEAR / _segmentCount;
