@@ -10,10 +10,12 @@ public class BodyManager : MonoBehaviour {
 	public GameObject model_moon;
 	public GameObject model_earth_mesh;
 
+
 	public GameObject body_sun;
 	public GameObject body_earth;
 	public GameObject body_moon;
 	public GameObject body_earth_mesh;
+	public GameObject body_earth_mesh_scaled;
 
 	public ModelManager myModelManager;
 	public Transform directionalLight;
@@ -63,10 +65,10 @@ public class BodyManager : MonoBehaviour {
 		playerPosition.transform.SetParent (targetPos.transform, false);
 		if (viewingFromGround) {
 			//Debug.Log ("OFF");
-			body_earth_mesh.GetComponent<Renderer> ().enabled = false;
+			body_earth_mesh_scaled.GetComponent<Renderer> ().enabled = false;
 		} else {
 			//Debug.Log("ON");
-			body_earth_mesh.GetComponent<Renderer> ().enabled = true;
+			body_earth_mesh_scaled.GetComponent<Renderer> ().enabled = true;
 		}
 
 	}

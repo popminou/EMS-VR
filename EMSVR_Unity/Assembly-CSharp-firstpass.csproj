@@ -59,6 +59,7 @@
      <Compile Include="Assets\Plugins\VectrosityScripts\VisibilityControl.cs" />
      <Compile Include="Assets\Plugins\VectrosityScripts\VisibilityControlAlways.cs" />
      <Compile Include="Assets\Plugins\VectrosityScripts\VisibilityControlStatic.cs" />
+     <None Include="Assets\Shaders\FlipNormals.shader" />
      <None Include="Assets\OVR\Moonlight\Shaders\OVRColorRampAlpha.shader" />
      <None Include="Assets\OVR\Moonlight\Shaders\Unlit Crosshair.shader" />
      <None Include="Assets\OVR\Moonlight\Resources\Unlit Transparent Color.shader" />
