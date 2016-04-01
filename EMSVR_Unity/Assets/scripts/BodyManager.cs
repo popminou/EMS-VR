@@ -51,6 +51,7 @@ public class BodyManager : MonoBehaviour {
 
 	public bool DEBUG_STATIONARY_MODEL = false;
 
+	public Material skyboxMat;
 
 	//public float BODIES_FACTOR = 10f;
 
@@ -114,6 +115,7 @@ public class BodyManager : MonoBehaviour {
 		//UpdateCamera();
 	}
 
+	public float curColor = 0f;
 	void SetBodyPositions()
 	{
 		ModelManager.BodyPos earthPos = myModelManager.GetEarthPos ();
@@ -135,24 +137,23 @@ public class BodyManager : MonoBehaviour {
 		directionalLight_model.LookAt (model_earth.transform.position);
 		earthCam.LookAt (body_moon.transform.position);
 	
-		//SetCameraColor (ModelManager.mod(earthPos.rot, 360f) - ModelManager.mod(earthPos.angle, 360f));
+		SetCameraColor (ModelManager.mod(earthPos.rot, 360f) + ModelManager.mod(earthPos.angle, 360f));
+
 	}
 
 
-	void SetCameraColor(float rot)
+	void SetCameraColor(float earthRot)
 	{
-		Debug.Log ("adjusted Rot = " + rot);
-		//earthRot += 210;
-		//Debug.Log ("earthRot " + earthRot);
-		//float colorLerp = (Mathf.Sin((earthRot) * Mathf.Deg2Rad) + 1)/2f;
-		//float colorLerp = Mathf.Abs (earthRot - 180) / 360;
-		//float colorLerp = Mathf.abs(earthRot - 110)
-		float colorLerp = 0;// myModelManager.GetCurrentDayFactor();
-		Debug.Log (colorLerp);
+		
+		float colorLerp = (Mathf.Sin((earthRot) * Mathf.Deg2Rad) + 1)/2f;
+
+		//Debug.Log (colorLerp);
 		if (viewingFromGround) {
-			playerView.backgroundColor = Color.Lerp (ground_nightColor, ground_dayColor, colorLerp);
+			
+			skyboxMat.SetFloat("_Blend", colorLerp);//rot);
 		} else {
-			playerView.backgroundColor = spaceColor;
+			
+			skyboxMat.SetFloat("_Blend", 0f);
 		}
 	}
 	
